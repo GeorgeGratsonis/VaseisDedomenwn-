@@ -45,3 +45,11 @@ User_Id int auto_increment primary key,
 Username varchar(255) not null, 
 User_Password varchar(255) not null
 );
+
+--School_User's table 
+CREATE table School_User ( 
+constraint fk_School_Id
+constraint fk_User_Id
+foreign key (School_Id) references School_Unit (School_Id), 
+foreign key (User_Id) references User_Info (User_Id)
+);
