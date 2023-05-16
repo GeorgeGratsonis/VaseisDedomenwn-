@@ -39,3 +39,9 @@ on delete restrict
 on update cascade
 );
 
+--User's_info table
+CREATE table User_Info (
+User_Id int auto_increment primary key,
+Username varchar(255) not null, 
+User_Password varchar(255) not null
+);
