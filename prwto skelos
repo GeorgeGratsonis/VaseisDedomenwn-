@@ -11,13 +11,31 @@ Librarian_Name varchar(255) not null,
 );
 
 --Book's table
+CREATE table Book (
 Book_Id int auto_increment primary key, 
 Book_Title varchar(255) not null, 
 Book_Publisher varchar(255) not null, 
 Book_ISBN varchar(255) not null, 
-Book_Summary TEXT, 
+Book_Summary text, 
 Book_Copies_Avalaible int not null, 
 Book_Image varchar(255), 
 Book_Language varchar(255),
 Book_Keywords varchar(255)
 );
+
+--Author's_Info table
+CREATE table Author_info ( 
+Author_id int auto_increment primary key,
+Author_name varchar(255) not null
+); 
+
+--Author's table 
+CREATE table author ( 
+constraint fk_Book_Id
+constraint fk_Author_Id
+foreign key (Book_Id) references Book(Book_Id), 
+foreign key (Author_Id) references Author(Author_Id)
+on delete restrict
+on update cascade
+);
+
