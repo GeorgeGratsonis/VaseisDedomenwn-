@@ -204,3 +204,12 @@ body {
         transform: translateY(-8px) rotate(-45deg);
     }
 }
+
+form { 
+    margin-top: 0.4rem; 
+    margin-bottom: 0.4rem;
+}
+
+h2 {
+    margin-bottom: 4rem;
+}
