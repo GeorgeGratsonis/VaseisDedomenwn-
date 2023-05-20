@@ -5,14 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="Books.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">  
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Navbar Section  -->
     <nav class="navbar">
         <div class="navbar__container">
             <a href="/" id="navbar__logo">BooksForStudents</a>
@@ -45,24 +44,16 @@
             </ul>
         </div>
        </nav>
-
-       <!-- Hero Section-->
-       <div class="main">
-        <div class="main__container">
-            <div class="main__content">
-                <h2>Εφαρμογή Διαχείρησης Βιβλιοθήκης-Δίκτυο Σχολικών Βιβλιοθηκών
-                </h2>
-                <button class="main__btn">
-                    <a href="signin.html">Get Started</a>
-                  </button>
-                  
-                  </div>
-            <div class="main__img--container">
-                <img src="images/pic1.svg" alt="pic" id="main__img">
-            </div>
-        </div>
-       </div>
        
-       <script src="app.js"></script>
+    <main class="main">
+        <h2>Available Books:</h2>
+        <form>
+            <label>Search by book title:</label>
+            <input type="text" placeholder="">
+            <label>Search by author:</label>
+            <input type="text" placeholder=""> 
+        </form>
+        <h2>See the most popular:</h2>
+    </main>
 </body>
 </html>
