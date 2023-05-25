@@ -36,6 +36,10 @@
                         Σχολεία
                     </a>
                 </li>
+                <li class="navbar__item">
+                    <a href="/borrow.html" class="navbar__links">
+                        Δανεισμοί
+                    </a>
                 <li class="navbar__btn">
                     <a href="/signin.html" class="button">
                         Sign in
@@ -46,13 +50,25 @@
        </nav>
        
     <main class="main">
+        <br>
         <h2>Available Books:</h2>
-        <form>
+        <br>
+        <div class="form-container"> 
+        <form id="booksform">
             <label>Search by book title:</label>
-            <input type="text" placeholder="">
+            <input type="text" placeholder="e.g The art of war">
             <label>Search by author:</label>
-            <input type="text" placeholder=""> 
+            <input type="text" placeholder="e.g Irvin Yalom"> 
+            <br>
+            <br>
+            <label>Search by ISBN:</label>
+            <input type="text" placeholder="e.g 1836">
+            <label>Search by Publisher:</label>
+            <input type="text" placeholder="Ekdoseis to mouni tis manas">
+
         </form>
+        </div>
+        <br>
         <h2>See the most popular:</h2>
     </main>
 </body>

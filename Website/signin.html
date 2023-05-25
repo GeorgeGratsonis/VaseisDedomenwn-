@@ -36,6 +36,10 @@
                         Σχολεία
                     </a>
                 </li>
+                <li class="navbar__item">
+                    <a href="/borrow.html" class="navbar__links">
+                        Δανεισμοί
+                    </a>
                 <li class="navbar__btn">
                     <a href="/signin.html" class="button">
                         Sign in
@@ -45,18 +49,28 @@
         </div>
        </nav>
 
-    <main class="main">
+       <main class="main">
+        <br>
         <h2>Lets sign in</h2>
-        <form>
-            <label>Username</label>
-            <input type="text" placeholder="">
-            <label>Password</label>
-            <input type="text" placeholder=""> 
-            <button class="main__btn">Sign In</button>
-            <img src="images/pic2.svg" alt="pic" id="main__img">
-            <div class="image-container">
-            </div>
-        </form>
+        <div class="form-container"> <!-- New div added -->
+            <form id="signform">
+                <label>Username</label>
+                <input type="text" placeholder="e.g Antonis" id="username">
+                <label>Password</label>
+                <input type="password" placeholder="Type in password" class="input-field">
+                <button class="signin__btn">
+                   <a> Sign In </a>
+                </button>
+            </form>
+            <br>
+            <button class="change-password">
+                <a href="password.html">Change Your Password</a>
+            </button>
+            
+        </div>
+        <img src="images/pic2.svg" alt="pic" id="main__img">
+        <div class="image-container">
+        </div>
     </main>
 </body>
 </html>
