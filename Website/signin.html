@@ -42,7 +42,7 @@
                     </a>
                 <li class="navbar__btn">
                     <a href="/signin.html" class="button">
-                        Sign in
+                        Sign Up
                     </a>
                 </li>    
             </ul>
@@ -51,20 +51,25 @@
 
        <main class="main">
         <br>
-        <h2>Lets sign in</h2>
+        <h2>Lets sign in:</h2>
         <div class="form-container"> <!-- New div added -->
             <form id="signform">
                 <label>Username</label>
-                <input type="text" placeholder="e.g Antonis" id="username">
+                <input type="text" placeholder="e.g Antonis" required id="username">
                 <label>Password</label>
-                <input type="password" placeholder="Type in password" class="input-field">
+                <input type="password" placeholder="Type in password" required class="input-field">
+                
                 <button class="signin__btn">
                    <a> Sign In </a>
                 </button>
             </form>
+            <div class="remember-me">
+                <input type="checkbox" id="rememberCheckbox">
+                <label for="rememberCheckbox">Remember Me</label>
+            </div>
             <br>
             <button class="change-password">
-                <a href="password.html">Change Your Password</a>
+                <a href="password.html">Forgot your Password?</a>
             </button>
             
         </div>
