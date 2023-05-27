@@ -4,12 +4,12 @@ use School_Library;
 
 -- 4.1.1
 
-SELECT School.Name As School_Name, COUNT(Borrowing.Borrowing_ID) AS Books_Borrowed
+SELECT School.Name AS School_Name, COUNT(Borrowing.Borrowing_ID) AS Books_Borrowed
 FROM School
 JOIN User ON School.School_ID = User.School_ID
 JOIN Borrowing ON User.User_ID = Borrowing.User_ID
-WHERE YEAR(Borrowing.Borrowing_Date) = <Year>
-AND MONTH(Borrowing.Borrowing_Date) = <Month>
+WHERE YEAR(Borrowing.Borrowing_Date) = 2023
+AND MONTH(Borrowing.Borrowing_Date) = 5
 GROUP BY School.School_ID;
 
 -- 4.1.2
@@ -28,12 +28,12 @@ AND Borrowing.Borrowing_Date >= DATE_SUB(NOW(), INTERVAL 1 YEAR);
 
 -- 4.1.3
 
-SELECT CONCAT(User.First_Name, ' ', User.Last_Name) As Professor_Fullname, COUNT(Borrowing.Book_ID) AS Books_Borrowed
+SELECT CONCAT(User.First_Name, ' ', User.Last_Name) AS Professor_Fullname, COUNT(Borrowing.Book_ID) AS Books_Borrowed
 FROM User
 JOIN Borrowing ON User.User_ID = Borrowing.User_ID
 WHERE User.Role = 'Professor' AND User.Age < 40
 GROUP BY User.User_ID
-ORDER BY BooksBorrowed DESC;
+ORDER BY Books_Borrowed DESC;
 
 -- 4.1.4
 
