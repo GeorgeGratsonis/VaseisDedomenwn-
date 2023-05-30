@@ -284,3 +284,15 @@
 .card-body .btn {
     margin-top: auto;
 }
+
+.navbar__button {
+  position: center;
+}
+
+.navbar_item {
+  margin-top: 1rem; 
+}
+
+#backup {
+  margin-right: 1rem;
+}

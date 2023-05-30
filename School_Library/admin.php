@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang = "en">
 
+<!DOCTYPE html>
+<html lang = "en">
+
 <head>
     <meta charset = "utf-8">
     <meta name = "viewport" content = "width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -16,21 +19,16 @@
 
 
 <body>
-<nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
-    <div id="navbar-div" class="container-fluid">
-        <a class="navbar-brand" id="nav-bar-text">School Library - Admin Page</a>
-        <form action="backup.php" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-primary">Backup</button>
-        </form>
-        <form action="restore.php" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-primary">Restore</button>
-        </form>
-        <a id="navbar-items" href="logout.php">
-            <i class="fa fa-home"></i> Log out
-        </a>
-        
-    </div>
-</nav>
+    <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
+        <div id="navbar-div" class="container-fluid">
+            <a class="navbar-brand" id="nav-bar-text">School Library - Admin Page</a>
+            <a id="navbar-items" href="">
+            <i class="backup"  id="backup" href="backup.php"></i> Backup
+            <i class="backup" href="restore.php"></i> Restore
+                <i class="fa fa-home" href="logout.php"></i> Log out
+            </a>
+        </div>
+    </nav>
 
 
     <div class="container" id="row-container">
