@@ -28,32 +28,37 @@
                         <?php
                         include 'connection.php';
 
-                        $query = "SELECT School.Name AS School_Name, COUNT(Borrowing.Borrowing_ID) AS Books_Borrowed
-                        FROM School
-                        JOIN User ON School.School_ID = User.School_ID
-                        JOIN Borrowing ON User.User_ID = Borrowing.User_ID
-                        WHERE YEAR(Borrowing.Borrowing_Date) = 2023
-                        AND MONTH(Borrowing.Borrowing_Date) = 5
-                        GROUP BY School.School_ID;
-                        ";
+                        $query = "SELECT CONCAT(Author.First_Name, ' ', Author.Last_Name) As Author_Fullname, COUNT(*) AS Books_Written
+                        FROM Author
+                        JOIN Book_Author ON Author.Author_ID = Book_Author.Author_ID
+                        GROUP BY Author.Author_ID, Author.First_Name, Author.Last_Name
+                        HAVING COUNT(*) >= (
+                            SELECT MAX(Book_Count) - 5
+                            FROM (
+                                SELECT COUNT(*) AS Book_Count
+                                FROM Book_Author
+                                GROUP BY Author_ID
+                            ) AS Counts
+                        );";
+                        
                         $result = mysqli_query($conn, $query);
 
                         if (mysqli_num_rows($result) == 0) {
-                            echo '<h1 style="margin-top: 5rem;">No Teachers found!</h1>';
+                            echo '<h1 style="margin-top: 5rem;">No Authors found!</h1>';
                         } else {
                             echo '<div class="table-responsive">';
                             echo '<table class="table">';
                             echo '<thead>';
                             echo '<tr>';
-                            echo '<th>Authors</th>';
-                            echo '<th>Books written</th>';
+                            echo '<th>Author Full Name</th>';
+                            echo '<th>Books Written</th>';
                             echo '</tr>';
                             echo '</thead>';
                             echo '<tbody>';
-                            while ($row = mysqli_fetch_row($result)) {
+                            while ($row = mysqli_fetch_assoc($result)) {
                                 echo '<tr>';
-                                echo '<td>' . $row[0] . '</td>';
-                                echo '<td>' . $row[1] . '</td>';
+                                echo '<td>' . $row['Author_Fullname'] . '</td>';
+                                echo '<td>' . $row['Books_Written'] . '</td>';
                                 echo '</tr>';
                             }
                             echo '</tbody>';
