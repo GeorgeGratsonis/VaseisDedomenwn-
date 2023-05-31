@@ -238,7 +238,7 @@ function check_libraryoperator_login($conn) {
 	die;
 }
 
-function changepassword($conn, $username, $password, $newpassword) {
+function changepassword($conn, $username, $oldpassword, $newpassword) {
 	$sql1 = "SELECT * FROM User WHERE Username = ?";
 	$stmt1 = mysqli_stmt_init($conn);
 	$sql2 = "SELECT * FROM Administrator WHERE Username = ?";
@@ -265,11 +265,11 @@ function changepassword($conn, $username, $password, $newpassword) {
 	mysqli_stmt_close($stmt3);
 
 	if ($row = mysqli_fetch_assoc($resultData1)) {
-		if ($password != $row['Password']) {
+		if ($oldpassword != $row['Password']) {
 			header("location: password.php?error=wrongpassword");
 			exit();
 		}
-		else if ($password == $row['Password']) {
+		else if ($oldpassword == $row['Password']) {
 			$query = "UPDATE User 
                     SET Password = '$newpassword'
                     WHERE Username = '$username'";
@@ -284,11 +284,11 @@ function changepassword($conn, $username, $password, $newpassword) {
 		}
 	}
 	else if ($row = mysqli_fetch_assoc($resultData2)) {
-		if ($password != $row['Password']) {
+		if ($oldpassword != $row['Password']) {
 			header("location: password.php?error=wrongpassword");
 			exit();
 		}
-		else if ($password == $row['Password']) {
+		else if ($oldpassword == $row['Password']) {
 			$query = "UPDATE Administrator 
 			SET Password = '$newpassword'
 			WHERE Username = '$username'";
@@ -303,11 +303,11 @@ function changepassword($conn, $username, $password, $newpassword) {
 		}
 	}
 	else if ($row = mysqli_fetch_assoc($resultData3)) {
-		if ($password != $row['Password']) {
+		if ($oldpassword != $row['Password']) {
 			header("location: signin.php?error=wrongpassword");
 			exit();
 		}
-		else if ($password == $row['Password']) {
+		else if ($oldpassword == $row['Password']) {
 			$query = "UPDATE LibraryOperator 
 			SET Password = '$newpassword'
 			WHERE Username = '$username'";
