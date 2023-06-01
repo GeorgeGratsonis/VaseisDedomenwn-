@@ -2,7 +2,7 @@
    
 $dbhost = "localhost";
 $dbuser = "root";
-$dbpass = "root";
+$dbpass = "";
 $db = "school_library";
 
 $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$db);

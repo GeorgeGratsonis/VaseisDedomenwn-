@@ -17,11 +17,9 @@
     <title>
         School Library
     </title>
-    <link rel = "stylesheet" href = "css/styles.css">
+    <link rel = "stylesheet" href = "css/admin.css">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel = "stylesheet" href = "bootstrap/css/bootstrap.min.css">
-    
-
 </head>
 
 
@@ -40,7 +38,7 @@
             <div class="col-md-4">
                 <div class="card" id="card-container-layout">
                     <div class="card-body" id="card">
-                        <h4 class="card-title">View User Info</h4>
+                        <h4 class="card-title">Borrower's Card</h4>
                         <p class="card-text" id="paragraph">View your information</p>
                         <a class="btn btn-primary" id="show-btn" href="userinfo.php">Show</a>
                     </div>

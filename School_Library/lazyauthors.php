@@ -1,3 +1,13 @@
+<?php 
+    session_start();
+
+    require_once 'connection.php';
+    require_once 'functions.php';
+
+	$admin_data = check_admin_login($conn);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,7 +23,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text">School Library - Admin Page</a>
+            <a class="navbar-brand" id="nav-bar-text" href="admin.php">School Library - Admin Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home" href="logout.php"></i> Log out
             </a>
@@ -28,18 +38,19 @@
                         <?php
                         include 'connection.php';
 
-                        $query = "SELECT CONCAT(Author.First_Name, ' ', Author.Last_Name) As Author_Fullname, COUNT(*) AS Books_Written
+                        $query = "SELECT CONCAT(Author.First_Name, ' ', Author.Last_Name) AS Author_Fullname, COUNT(*) AS Books_Written
                         FROM Author
                         JOIN Book_Author ON Author.Author_ID = Book_Author.Author_ID
                         GROUP BY Author.Author_ID, Author.First_Name, Author.Last_Name
-                        HAVING COUNT(*) >= (
+                        HAVING COUNT(*) <= (
                             SELECT MAX(Book_Count) - 5
                             FROM (
                                 SELECT COUNT(*) AS Book_Count
                                 FROM Book_Author
                                 GROUP BY Author_ID
                             ) AS Counts
-                        );";
+                        )
+                        ORDER BY Books_Written DESC;";
                         
                         $result = mysqli_query($conn, $query);
 
@@ -50,15 +61,15 @@
                             echo '<table class="table">';
                             echo '<thead>';
                             echo '<tr>';
-                            echo '<th>Author Full Name</th>';
+                            echo '<th>Authors</th>';
                             echo '<th>Books Written</th>';
                             echo '</tr>';
                             echo '</thead>';
                             echo '<tbody>';
-                            while ($row = mysqli_fetch_assoc($result)) {
+                            while ($row = mysqli_fetch_row($result)) {
                                 echo '<tr>';
-                                echo '<td>' . $row['Author_Fullname'] . '</td>';
-                                echo '<td>' . $row['Books_Written'] . '</td>';
+                                echo '<td>' . $row[0] . '</td>';
+                                echo '<td>' . $row[1] . '</td>';
                                 echo '</tr>';
                             }
                             echo '</tbody>';
@@ -73,6 +84,8 @@
         </div>
     </div>
 
+    &nbsp;
+    &nbsp;
     <script src="{{ url_for('static', filename = 'bootstrap/js/bootstrap.min.js') }}"></script>
 
 </body>

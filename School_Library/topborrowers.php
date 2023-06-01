@@ -18,7 +18,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text">School Library - Admin Page</a>
+            <a class="navbar-brand" id="nav-bar-text" href="admin.php">School Library - Admin Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home" href="logout.php"></i> Log out
             </a>
@@ -33,10 +33,10 @@
                         <?php
                         include 'connection.php';
                 
-                        $query = "SELECT CONCAT(User.First_Name, ' ', User.Last_Name) AS Professor_Fullname, COUNT(Borrowing.Book_ID) AS Books_Borrowed
+                        $query = "SELECT CONCAT(User.First_Name, ' ', User.Last_Name) AS Teacher_Fullname, COUNT(Borrowing.Book_ID) AS Books_Borrowed
                         FROM User
                         JOIN Borrowing ON User.User_ID = Borrowing.User_ID
-                        WHERE User.Role = 'Professor' AND User.Age < 40
+                        WHERE User.Role = 'Teacher' AND User.Age < 40
                         GROUP BY User.User_ID
                         ORDER BY Books_Borrowed DESC";
                         $result = mysqli_query($conn, $query);
@@ -50,8 +50,8 @@
                                 echo '<table class="table">';
                                     echo '<thead>';
                                         echo '<tr>';
-                                            echo '<th>Professors</th>';
-                                            echo '<th>Loans</th>';
+                                            echo '<th>Teachers</th>';
+                                            echo '<th>Borrowings</th>';
                                         echo '</tr>';
                                     echo '</thead>';
                                     echo '<tbody>';

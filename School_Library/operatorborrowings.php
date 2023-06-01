@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Library Users</title>
+    <link rel = "stylesheet" href = "css/styles.css">
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="bootstrap.css">
@@ -36,7 +37,7 @@
                                 <input type="text" class="form-control" name="firstName" placeholder="Search by First Name" aria-label="Search">
                                 <input type="text" class="form-control" name="lastName" placeholder="Search by Last Name" aria-label="Search">
                                 <input type="number" class="form-control" name="delayDays" placeholder="Search by Days of Delay" aria-label="Search">
-                                <button class="btn btn-primary" type="submit">Search</button>
+                                <button type="submit" class="btn btn-primary" id="show-btn">Submit</button>
                             </div>
                         </form>
 

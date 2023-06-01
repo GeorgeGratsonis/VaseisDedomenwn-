@@ -19,6 +19,25 @@ function invalidlastname($lastname) {
 	return $result;
 }
 
+function invalidname($name) {
+	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω' ']*$/", $name)) {
+		$result = true;
+	}
+	else {
+		$result = false;
+	}
+	return $result;
+}
+
+function invalidphone($phone) {
+	if (!preg_match('/^2\d{9}$/', $phone)) {
+		$result = true;
+	}
+	else {
+		$result = false;
+	}
+	return $result;
+}
 function pwdMatch($password, $passwordrepeat) {
 	if ($password !== $passwordrepeat) {
 		$result = true;
@@ -81,6 +100,60 @@ function libraryoperatorexists($conn, $school) {
 	if (mysqli_fetch_assoc($resultData)) {
 		$result = true;
 		return $result;
+	}
+	else {
+		$result = false;
+		return $result;
+	}
+}
+
+function schoolexists($conn, $schoolname, $id) {
+	$sql = "SELECT school_id FROM school WHERE name = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "s", $schoolname);
+	mysqli_stmt_execute($stmt);
+
+	$resultData = mysqli_stmt_get_result($stmt);
+
+	mysqli_stmt_close($stmt);
+
+	if ($row = mysqli_fetch_row($resultData)) {
+		if ($row[0] != $id) {
+			$result = true;
+			return $result;
+		}
+		else {
+			$result = false;
+			return $result;
+		}
+	}
+	else {
+		$result = false;
+		return $result;
+	}
+}
+
+function phoneexists($conn, $phone, $id) {
+	$sql = "SELECT school_id FROM school WHERE phone_number = ?";
+	$stmt = mysqli_stmt_init($conn);
+	mysqli_stmt_prepare($stmt, $sql);
+	mysqli_stmt_bind_param($stmt, "i", $phone);
+	mysqli_stmt_execute($stmt);
+
+	$resultData = mysqli_stmt_get_result($stmt);
+
+	mysqli_stmt_close($stmt);
+
+	if ($row = mysqli_fetch_row($resultData)) {
+		if ($row[0] != $id) {
+			$result = true;
+			return $result;
+		}
+		else {
+			$result = false;
+			return $result;
+		}
 	}
 	else {
 		$result = false;

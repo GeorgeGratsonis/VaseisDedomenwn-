@@ -43,17 +43,21 @@
                         <?php
                         include 'connection.php';
                 
-                        $query = "SELECT DISTINCT CONCAT(Author.First_Name, ' ', Author.Last_Name) AS Author_Fullname
-                        FROM Author
-                        LEFT JOIN Book_Author ON Author.Author_ID = Book_Author.Author_ID
-                        LEFT JOIN Book ON Book_Author.Book_ID = Book.Book_ID
-                        LEFT JOIN Borrowing ON Book.Book_ID = Borrowing.Book_ID
-                        WHERE Borrowing.Book_ID IS NULL;
-                        ";
+                        $query = "SELECT GROUP_CONCAT(CONCAT(LibraryOperator.First_Name, ' ', LibraryOperator.Last_Name) SEPARATOR ', ') AS LibraryOperators_Fullnames, Borrowing.Loans
+                        FROM (
+                          SELECT Borrowing.LibraryOperator_ID, COUNT(*) AS Loans
+                          FROM Borrowing
+                          WHERE Borrowing.Borrowing_Date >= DATE_SUB(NOW(), INTERVAL 1 YEAR)
+                          GROUP BY Borrowing.LibraryOperator_ID
+                          HAVING COUNT(*) > 10
+                        ) AS Borrowing
+                        JOIN LibraryOperator ON Borrowing.LibraryOperator_ID = LibraryOperator.LibraryOperator_ID
+                        GROUP BY Borrowing.Loans
+                        HAVING COUNT(*) > 1;"; 
                         $result = mysqli_query($conn, $query);
                         
                         if(mysqli_num_rows($result) == 0){
-                            echo 'All authors have books that have been borrowed</h1>';
+                            echo '<h1 style="margin-top: 5rem;">No Library Operators found!</h1>';
                         }
                         else{
 
@@ -61,13 +65,15 @@
                                 echo '<table class="table">';
                                     echo '<thead>';
                                         echo '<tr>';
-                                            echo '<th>Authors</th>';
+                                            echo '<th>Library Operators</th>';
+                                            echo '<th>Loans</th>';
                                         echo '</tr>';
                                     echo '</thead>';
                                     echo '<tbody>';
                                     while($row = mysqli_fetch_row($result)){
                                         echo '<tr>';
                                             echo '<td>' . $row[0] . '</td>';
+                                            echo '<td>' . $row[1] . '</td>';
                                             echo '<td>';
                                                 echo '</a>';
                                             echo '</td>';
@@ -84,9 +90,7 @@
             </div>
         </div>
     </div>
-    
-    &nbsp;
-    &nbsp;
+
     <script src = "{{ url_for('static', filename = 'bootstrap/js/bootstrap.min.js') }}"></script>
     
 </body>

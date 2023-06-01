@@ -68,7 +68,7 @@
                 <select name="role" required id="role" onchange="updateAgeRange()">
                     <option value="" selected disabled></option>
                     <option value="student">Student</option>
-                    <option value="professor">Professor</option>
+                    <option value="teacher">Teacher</option>
                     <option value="library operator">Library Operator</option>
                 </select>
                 <br>
@@ -96,9 +96,7 @@
                 <br>
                 <?php
                     if (isset($_GET["error"])) {
-                        if ($_GET["error"] == "invalidusername") {
-                            echo "<p class='error-message'>Choose a proper username!</p>";
-                        } else if ($_GET["error"] == "invalidfirstname") {
+                        if ($_GET["error"] == "invalidfirstname") {
                             echo "<p class='error-message'>Choose a proper first name!</p>";
                         } else if ($_GET["error"] == "invalidlastname") {
                             echo "<p class='error-message'>Choose a proper last name!</p>";
@@ -137,7 +135,7 @@
             if (roleInput.value === "student") {
                 ageInput.min = 6;
                 ageInput.max = 18;
-            } else if (roleInput.value === "professor" || roleInput.value === "library operator") {
+            } else if (roleInput.value === "teacher" || roleInput.value === "library operator") {
                 ageInput.min = 25;
                 ageInput.max = 80;
             }

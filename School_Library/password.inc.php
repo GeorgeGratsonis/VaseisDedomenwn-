@@ -19,7 +19,7 @@ if (isset($_POST["submit"])) {
         exit();
     }
 
-    changepassword($conn, $username, $password, $newpassword);
+    changepassword($conn, $username, $oldpassword, $newpassword);
 }
 else {
     header("location: password.php?");

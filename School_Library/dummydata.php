@@ -12,9 +12,10 @@ $firstName = $faker->firstName;
 $lastName = $faker->lastName;
 $username = $faker->unique()->userName;
 $password = $faker->password;
+$age = 60;
 
-$stmt = $conn->prepare("INSERT INTO Administrator (First_Name, Last_Name, Username, Password) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssss", $firstName, $lastName, $username, $password);
+$stmt = $conn->prepare("INSERT INTO Administrator (First_Name, Last_Name, Username, Password, Age) VALUES (?, ?, ?, ?, ?)");
+$stmt->bind_param("ssssi", $firstName, $lastName, $username, $password, $age);
 $stmt->execute();
 $stmt->close();
 
@@ -53,7 +54,7 @@ for ($i = 0; $i <= 5; $i++) {
     $emailDomain = $faker->randomElement($emailDomains);
     $email = strtolower(str_replace(' ', '', $name)) . '@' . $emailDomain;
     $phoneNumber = $faker->numerify('2#########');
-    $directorFullName = $faker->name;
+    $directorFullName = $faker->firstName . ' ' . $faker->lastName;
     $adminId = 1;
 
     $stmt = $conn->prepare("INSERT INTO School (Name, Address, City, Email, Phone_Number, Director_Fullname, Admin_ID) VALUES (?, ?, ?, ?, ?, ?, ?)");
@@ -100,7 +101,7 @@ for ($i = 1; $i <= 60; $i++) {
     $stmt->close();
 }
 
-// Generate professors
+// Generate teachers
 
 for ($i = 1; $i <= 30; $i++) {
     $username = $faker->unique()->userName;
@@ -108,7 +109,7 @@ for ($i = 1; $i <= 30; $i++) {
     $firstName = $faker->firstName;
     $lastName = $faker->lastName;
     $age = $faker->numberBetween(25, 80);
-    $role = 'Professor';
+    $role = 'Teacher';
     $schoolId = $faker->numberBetween(1, 6);
     $stmt = $conn->prepare("SELECT LibraryOperator_ID FROM LibraryOperator WHERE School_ID = $schoolId");
     $stmt->execute();
@@ -144,7 +145,7 @@ $faker = Faker\Factory::create('el_GR');
 
 // Generate categories
 
-$categories = ['Fiction', 'Non-fiction', 'Mystery', 'Sci-Fi', 'Romance', 'Thriller', 'Biography', 'History', 'Fantasy', 'Self-Help'];
+$categories = ['Fiction', 'Non-Fiction', 'Mystery', 'Sci-Fi', 'Romance', 'Thriller', 'Biography', 'History', 'Fantasy', 'Self-Help'];
 
 foreach ($categories as $category) {
     $stmt = $conn->prepare("INSERT INTO Category (Name) VALUES (?)");

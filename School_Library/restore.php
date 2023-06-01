@@ -1,13 +1,57 @@
 <?php
-$dbhost = 'localhost';
-$dbuser = 'root';
-$dbpass = 'root';
-$dbname = 'School_Library';
-$backup_file = '/Users/georgegratsonis/Desktop/Desktop2023-05-30_20-29-01';
 
-// command to restore
-$command = "gunzip < $backup_file | mysql --user=$dbuser --password=$dbpass --host=$dbhost $dbname";
+if (isset($_POST["submit"])) {
+$conn = mysqli_connect("localhost", "root", "", "School_Library");
+$filePath = "school_library.2023-05-30.sql";
+function restoreMysqlDB($filePath, $conn)
+{
+    $sql = '';
+    $error = '';
+    
+    if (file_exists($filePath)) {
+        $lines = file($filePath);
+        
+        foreach ($lines as $line) {
+            
+            // Ignoring comments from the SQL script
+            if (substr($line, 0, 2) == '--' || $line == '') {
+                continue;
+            }
+            
+            $sql .= $line;
 
-system($command);
-header("location: Admin.php")
-?>
+            if (substr(trim($line), - 1, 1) == ';') {
+                try {
+                    $result = mysqli_query($conn, $sql);
+                }
+                catch (Exception $e) {
+                    header("location: admin.php?error=failedrestore");
+                    exit();
+                }
+                $result = mysqli_query($conn, $sql);
+                if (! $result) {
+                    $error .= mysqli_error($conn) . "\n";
+                }
+                $sql = '';
+            }
+        } // end foreach
+        
+        if ($error) {
+            header("location: admin.php?error=failedrestore");
+            exit();
+        } else {
+            $response = array(
+                "type" => "success",
+                "message" => "Database Restore Completed Successfully."
+            );
+        }
+    } // end if file exists
+    header("location: admin.php?error=successrestore");
+    return $response;
+}
+restoreMysqlDB($filePath,$conn);
+}
+else {
+    header("location: admin.php");
+    exit();
+}
