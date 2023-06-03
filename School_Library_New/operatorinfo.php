@@ -4,7 +4,8 @@
     require_once 'connection.php';
     require_once 'functions.php';
 
-    $operator_data = check_libraryoperator_login($conn);
+	$operator_data = check_libraryoperator_login($conn);
+
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>School Library</title>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="bootstrap.css">
     <style>
@@ -28,11 +29,11 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
+    <nav class="navbar navbar-light navbar-expand-md" id="nav-bar"> 
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text" href="admin.php">School Library - Operator Page</a>
+            <a class="navbar-brand" id="nav-bar-text" href="libraryoperator.php">School Library - Library Operator Page</a>
             <a id="navbar-items" href="logout.php">
-                <i class="fa fa-home"></i> Log out
+                <i class="fa fa-home "></i> Log out
             </a>
         </div>
     </nav>
@@ -50,15 +51,13 @@
                 <div class="card" id="card-container">
                     <div class="card-body" id="card">
                         <?php
-                        $LibraryOperator_ID = $operator_data['LibraryOperator_ID'];
-                        $query = "SELECT * FROM LibraryOperator WHERE LibraryOperator_ID = $LibraryOperator_ID";
+                        $query = "SELECT * FROM libraryoperator WHERE libraryoperator_id = $operator_data[LibraryOperator_ID]";
                         $result = mysqli_query($conn, $query);
                         
                         if(mysqli_num_rows($result) == 0){
-                            echo '<h1 style="margin-top: 5rem;">No Operator found!</h1>';
+                            echo '<h1 style="margin-top: 5rem;">No Library Operator found!</h1>';
                         }
                         else{
-
                             echo '<div class="table-responsive">';
                                 echo '<table class="table">';
                                     echo '<thead>';
@@ -67,18 +66,20 @@
                                             echo '<th>Last Name</th>';
                                             echo '<th>Username</th>';
                                             echo '<th>Role</th>';
+                                            echo '<th>Age</th>';
                                             echo '<th></th>';
                                         echo '</tr>';
                                     echo '</thead>';
                                     echo '<tbody>';
-                                    while($row = mysqli_fetch_assoc($result)){
+                                    while($row = mysqli_fetch_row($result)){
                                         echo '<tr>';
-                                            echo '<td>' . $row['First_Name'] . '</td>';
-                                            echo '<td>' . $row['Last_Name'] . '</td>';
-                                            echo '<td>' . $row['Username'] . '</td>';
-                                            echo '<td>Operator</td>';
+                                            echo '<td>' . $row[1] . '</td>';
+                                            echo '<td>' . $row[2] . '</td>';
+                                            echo '<td>' . $row[3] . '</td>';
+                                            echo '<td>Library Operator</td>';
+                                            echo '<td>' . $row[5] . '</td>';
                                             echo '<td>';
-                                                echo '<a href="./updateoperatorinfo.php?id=' . $row['LibraryOperator_ID']. '">';
+                                                echo '<a type="button" href="./updateoperatorinfo.php?id=' . $row[0]. '">';
                                                     echo '<i class="fa fa-edit"></i>';
                                                 echo '</a>';
                                             echo '</td>';
@@ -90,12 +91,14 @@
                         }
                         ?>          
                     </div>
+                    <a action></a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src = "{{ url_for('static', filename = 'bootstrap/js/bootstrap.min.js') }}"></script>
+    
 </body>
 
 </html>

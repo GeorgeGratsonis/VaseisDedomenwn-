@@ -4,7 +4,7 @@
     require_once 'connection.php';
     require_once 'functions.php';
 
-	$user_data = check_LibraryOperator_login($conn);
+	$operator_data = check_LibraryOperator_login($conn);
 
 ?>
 
@@ -15,7 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>School Library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="bootstrap.css">
     <style>
@@ -34,7 +34,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar"> 
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text" href="user.php">School Library - User Page</a>
+            <a class="navbar-brand" id="nav-bar-text" href="libraryoperator.php">School Library - Library Operator Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home"></i> Log out
             </a>
@@ -98,14 +98,21 @@
                             }
 
                             $query = "SELECT Book.Title, Book.Publisher, Book.ISBN, Book.Number_of_pages, Book.Summary, Book.Available_copies, Book.Image, Book.Language, Book.Keywords,
-                                GROUP_CONCAT(DISTINCT CONCAT(Author.First_Name, ' ', Author.Last_Name)) AS Authors, GROUP_CONCAT(DISTINCT Category.Name) AS Categories
-                                FROM Book
-                                JOIN Book_Author ON Book.Book_ID = Book_Author.Book_ID
-                                JOIN Author ON Book_Author.Author_ID = Author.Author_ID
-                                JOIN Book_Category ON Book.Book_ID = Book_Category.Book_ID
-                                JOIN Category ON Book_Category.Category_ID = Category.Category_ID
-                                WHERE 1=1 $whereClause
-                                GROUP BY Book.Book_ID;";
+                            (SELECT GROUP_CONCAT(DISTINCT CONCAT(Author.First_Name, ' ', Author.Last_Name)) FROM Book_Author
+                            JOIN Author ON Book_Author.Author_ID = Author.Author_ID
+                            WHERE Book_Author.Book_ID = Book.Book_ID) AS Authors,
+                            (SELECT GROUP_CONCAT(DISTINCT Category.Name) FROM Book_Category
+                            JOIN Category ON Book_Category.Category_ID = Category.Category_ID
+                            WHERE Book_Category.Book_ID = Book.Book_ID) AS Categories,
+                            Book.Book_ID
+                            FROM Book
+                            JOIN Book_Author ON Book.Book_ID = Book_Author.Book_ID
+                            JOIN Author ON Book_Author.Author_ID = Author.Author_ID
+                            JOIN Book_Category ON Book.Book_ID = Book_Category.Book_ID
+                            JOIN Category ON Book_Category.Category_ID = Category.Category_ID
+                            JOIN book_libraryoperator ON Book.Book_ID = book_libraryoperator.Book_ID
+                            WHERE Book_LibraryOperator.LibraryOperator_ID = '$operator_data[LibraryOperator_ID]' $whereClause
+                            GROUP BY Book.Book_ID;";
                             $result = mysqli_query($conn, $query);
 
                             if (mysqli_num_rows($result) == 0) {

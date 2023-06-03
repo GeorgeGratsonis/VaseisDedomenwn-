@@ -1,6 +1,6 @@
 <?php
 function invalidfirstname($firstname) {
-	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω]*$/", $firstname)) {
+	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω άέώύόίήΆΈΏΎΌΊΉ]*$/u", $firstname)) {
 		$result = true;
 	}
 	else {
@@ -10,7 +10,7 @@ function invalidfirstname($firstname) {
 }
 
 function invalidlastname($lastname) {
-	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω]*$/", $lastname)) {
+	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω άέώύόίήΆΈΏΎΌΊΉ]*$/u", $lastname)) {
 		$result = true;
 	}
 	else {
@@ -20,7 +20,7 @@ function invalidlastname($lastname) {
 }
 
 function invalidname($name) {
-	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω' ']*$/", $name)) {
+	if (!preg_match("/^[a-zA-Zα-ωΑ-Ω άέώύόίήΆΈΏΎΌΊΉ]*$/u", $name)) {
 		$result = true;
 	}
 	else {

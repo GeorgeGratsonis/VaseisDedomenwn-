@@ -1,3 +1,13 @@
+<?php 
+    session_start();
+
+    require_once 'connection.php';
+    require_once 'functions.php';
+
+    $operator_data = check_LibraryOperator_login($conn);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,7 +30,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text">School Library - Operator Page</a>
+            <a class="navbar-brand" id="nav-bar-text" href="libraryoperator.php">School Library - Library Operator Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home" href="logout.php"></i> Log out
             </a>
@@ -42,57 +52,61 @@
                         </form>
 
                         <?php
-                        include 'connection.php';
+                            include 'connection.php';
 
-                        $firstName = $_GET['firstName'] ?? '';
-                        $lastName = $_GET['lastName'] ?? '';
-                        $delayDays = $_GET['delayDays'] ?? '';
+                            $firstName = $_GET['firstName'] ?? '';
+                            $lastName = $_GET['lastName'] ?? '';
+                            $delayDays = $_GET['delayDays'] ?? '';
 
-                        $query = "SELECT CONCAT(User.First_Name, ' ', User.Last_Name) As User_Fullname, User.Role, DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) AS Delay_Days
-                        FROM User
-                        JOIN Borrowing ON User.User_ID = Borrowing.User_ID
-                        WHERE Borrowing.Returned = FALSE ";
+                            $query = "SELECT Book.Title AS Book_Title, CONCAT(User.First_Name, ' ', User.Last_Name) As User_Fullname, User.Role, DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) AS Delay_Days
+                                FROM User
+                                JOIN Borrowing ON User.User_ID = Borrowing.User_ID
+                                JOIN Book ON Borrowing.Book_ID = Book.Book_ID
+                                WHERE Borrowing.Returned = FALSE
+                                AND Borrowing.LibraryOperator_ID = '$operator_data[LibraryOperator_ID]'";
 
-                        if ($firstName) {
-                            $query .= "AND User.First_Name LIKE '%$firstName%' ";
-                        }
-
-                        if ($lastName) {
-                            $query .= "AND User.Last_Name LIKE '%$lastName%' ";
-                        }
-
-                        if ($delayDays) {
-                            $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > $delayDays AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) IS NOT NULL";
-                        } else {
-                            $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > 0";
-                        }
-
-                        $result = mysqli_query($conn, $query);
-
-                        if (mysqli_num_rows($result) == 0) {
-                            echo '<h1 style="margin-top: 5rem;">No Users found!</h1>';
-                        } else {
-                            echo '<div class="table-responsive">';
-                            echo '<table class="table">';
-                            echo '<thead>';
-                            echo '<tr>';
-                            echo '<th>User Full Name</th>';
-                            echo '<th>Role</th>';
-                            echo '<th>Delay Days</th>';
-                            echo '</tr>';
-                            echo '</thead>';
-                            echo '<tbody>';
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo '<tr>';
-                                echo '<td>' . $row['User_Fullname'] . '</td>';
-                                echo '<td>' . $row['Role'] . '</td>';
-                                echo '<td>' . $row['Delay_Days'] . '</td>';
-                                echo '</tr>';
+                            if ($firstName) {
+                                $query .= "AND User.First_Name LIKE '%$firstName%' ";
                             }
-                            echo '</tbody>';
-                            echo '</table>';
-                            echo '</div>';
-                        }
+
+                            if ($lastName) {
+                                $query .= "AND User.Last_Name LIKE '%$lastName%' ";
+                            }
+
+                            if ($delayDays) {
+                                $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > $delayDays AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) IS NOT NULL";
+                            } else {
+                                $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > 0";
+                            }
+
+                            $result = mysqli_query($conn, $query);
+
+                            if (mysqli_num_rows($result) == 0) {
+                                echo '<h1 style="margin-top: 5rem;">No Users found!</h1>';
+                            } else {
+                                echo '<div class="table-responsive">';
+                                echo '<table class="table">';
+                                echo '<thead>';
+                                echo '<tr>';
+                                echo '<th>Book Title</th>';
+                                echo '<th>User Full Name</th>';
+                                echo '<th>Role</th>';
+                                echo '<th>Delay Days</th>';
+                                echo '</tr>';
+                                echo '</thead>';
+                                echo '<tbody>';
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo '<tr>';
+                                    echo '<td>' . $row['Book_Title'] . '</td>';
+                                    echo '<td>' . $row['User_Fullname'] . '</td>';
+                                    echo '<td>' . $row['Role'] . '</td>';
+                                    echo '<td>' . $row['Delay_Days'] . '</td>';
+                                    echo '</tr>';
+                                }
+                                echo '</tbody>';
+                                echo '</table>';
+                                echo '</div>';
+                            }
                         ?>
                     </div>
                 </div>

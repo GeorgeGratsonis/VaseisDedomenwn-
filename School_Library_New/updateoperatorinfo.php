@@ -15,7 +15,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>School Library</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="bootstrap.css">
     <style>
@@ -29,7 +29,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text"  href="operator.php">School Library - operator Page</a>
+            <a class="navbar-brand" id="nav-bar-text"  href="libraryoperator.php">School Library - Library Operator Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home" href="logout.php"></i> Log out
             </a>
@@ -41,7 +41,7 @@
         <div class="col-md-12">
             <?php
                 $id = $_GET['id'];
-                $query = "SELECT libraryoperator.first_name, libraryoperator.last_name, libraryoperator.username FROM libraryoperator WHERE libraryoperator_id = $id";
+                $query = "SELECT libraryoperator.first_name, libraryoperator.last_name, libraryoperator.username, libraryoperator.age FROM LibraryOperator WHERE LibraryOperator_id = '$id'";
                 $res1 = mysqli_query($conn, $query);
                 $row = mysqli_fetch_row($res1);
 
@@ -67,6 +67,10 @@
                     <label class = "form-label">New Username</label>
                     <input class = "form-control", name="username", placeholder="Username">
                 </div>
+                <div class="form-group col-sm-3 mb-3">
+                    <label class = "form-label">New Age</label>
+                    <input type="number" class = "form-control", name="age", placeholder="Age", min="25", max="70">
+                </div>
                 <button type="submit" class="btn btn-primary" id="show-btn" name="submit_upd_operator">Submit</button>
                 <button type="submit" class="btn btn-primary" id="show-btn" formaction="operatorinfo.php">Back</button>
             </form>
@@ -78,25 +82,30 @@
                     $firstname = $_POST['firstname'];
                     $lastname = $_POST['lastname'];
                     $username = $_POST['username'];
-                    if ($firstname == "") {
-                        $firstname = $row[0];
+                    $age = $_POST['age'];
+                
+                    if (empty($firstname)) {
+                        $firstname = $operator_data['First_Name'];
                     }
-                    if ($lastname == "") {
+                    if (empty($lastname)) {
                         $lastname = $row[1];
                     }
-                    if ($username == "") {
+                    if (empty($username)) {
                         $username = $row[2];
                     }
-                    
-                    if (invalidfirstname($firstname) !== false) {
+                    if (empty($age)) {
+                        $age = $row[3];
+                    }
+
+                    if (invalidfirstname($firstname) === true) {
                         echo "<hr><span class='error-message'>Choose a proper first name!</span>"; 
                     }
                     else if (invalidlastname($lastname) !== false) {
                         echo "<hr><span class='error-message'>Choose a proper last name!</span>"; 
                     }
-                    else{
+                    else {
                         $query = "UPDATE libraryoperator 
-                                SET first_name = '$firstname', last_name = '$lastname', username = '$username'
+                                SET first_name = '$firstname', last_name = '$lastname', username = '$username', age = '$age'
                                 WHERE libraryoperator_id = $id";
                         if (mysqli_query($conn, $query)) {
                             header("Location: ./operatorinfo.php?error=successupdate");
@@ -106,8 +115,8 @@
                             echo "Error while updating record: <br>" . mysqli_error($conn) . "<br>";
                         }
                     }
-                    
                 }
+            
                 
             ?>
 

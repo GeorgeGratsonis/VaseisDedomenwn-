@@ -84,16 +84,16 @@
                     $username = $_POST['username'];
                     $age = $_POST['age'];
 
-                    if ($firstname == "") {
+                    if (empty($firstname)) {
                         $firstname = $row[0];
                     }
-                    if ($lastname == "") {
+                    if (empty($lastname)) {
                         $lastname = $row[1];
                     }
-                    if ($username == "") {
+                    if (empty($username)) {
                         $username = $row[2];
                     }
-                    if ($age == "") {
+                    if (empty($age)) {
                         $age = $row[3];
                     }
 

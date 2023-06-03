@@ -1,3 +1,13 @@
+<?php 
+    session_start();
+
+    require_once 'connection.php';
+    require_once 'functions.php';
+
+	$operator_data = check_libraryoperator_login($conn);
+
+?>
+
 <!DOCTYPE html>
 <html lang = "en">
 
@@ -10,7 +20,7 @@
     <title>
         School Library
     </title>
-    <link rel = "stylesheet" href = "admin.css">
+    <link rel = "stylesheet" href = "css/admin.css">
     <link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel = "stylesheet" href = "bootstrap.css">
     
@@ -21,8 +31,8 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text">School Library - Operator Page</a>
-            <a id="navbar-items" href="">
+            <a class="navbar-brand" id="nav-bar-text" href="libraryoperator.php">School Library - Library Operator Page</a>
+            <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home" href="logout.php"></i> Log out
             </a>
         </div>
@@ -34,7 +44,7 @@
             <div class="col-md-4 box2">
                 <div class="card" id="card-container-layout">
                     <div class="card-body" id="card">
-                        <h4 class="card-title">View Operator Info</h4>
+                        <h4 class="card-title">Operator Info</h4>
                         <p class="card-text" id="paragraph">View your information</p>
                         <a class="btn btn-primary" id="show-btn" href="operatorinfo.php">Show</a>
                     </div>
@@ -43,8 +53,8 @@
             <div class="col-md-4">
                 <div class="card" id="card-container-layout">
                     <div class="card-body" id="card">
-                        <h4 class="card-title">School's Library books</h4>
-                        <p class="card-text" id="paragraph">Search criteria: Title/Category/Author/Copies <br></p>
+                        <h4 class="card-title">School's Library Books</h4>
+                        <p class="card-text" id="paragraph">Search criteria: Title/Category/Author/Copies<br></p>
                         <a class="btn btn-primary" id="show-btn" href="booklist.php">Show</a>
                     </div>
                 </div>
@@ -52,8 +62,8 @@
             <div class="col-md-4">
                 <div class="card" id="card-container-layout">
                     <div class="card-body" id="card">
-                        <h4 class="card-title">See the borrowings</h4>
-                        <p class="card-text" id="paragraph">Search criteria: User/ Categories <br></p>
+                        <h4 class="card-title">Delayed Borrowings</h4>
+                        <p class="card-text" id="paragraph">Search criteria: User/Days of Delay<br></p>
                         <a class="btn btn-primary" id="show-btn" href="operatorborrowings.php">Show</a>
                     </div>
                 </div>
@@ -62,7 +72,7 @@
                 <div class="card" id="card-container-layout">
                     <div class="card-body" id="card">
                         <h4 class="card-title">Average Ratings</h4>
-                        <p class="card-text" id="paragraph">Search criteria: User/ Categories <br></p>
+                        <p class="card-text" id="paragraph">Search criteria: User/Categories <br></p>
                         <a class="btn btn-primary" id="show-btn" href="operatorratings.php">Show</a>
                     </div>
                 </div>
@@ -70,7 +80,7 @@
             <div class="col-md-4">
                 <div class="card" id="card-container-layout">
                     <div class="card-body" id="card">
-                        <h4 class="card-title">See users:</h4>
+                        <h4 class="card-title">School's Users</h4>
                         <p class="card-text" id="paragraph">See your school users<br></p>
                         <a class="btn btn-primary" id="show-btn" href="operatorusers.php">Show</a>
                     </div>
