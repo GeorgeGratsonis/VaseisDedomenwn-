@@ -30,7 +30,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text" href="admin.php">User Review - Operator Page</a>
+            <a class="navbar-brand" id="nav-bar-text" href="admin.php">School Library - Operator Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home"></i> Log out
             </a>
@@ -50,12 +50,12 @@
                 <div class="card" id="card-container">
                     <div class="card-body" id="card">
                         <?php
-                        $School_ID = $operator_data['School_ID'];
-                        $query = "SELECT * FROM User WHERE School_ID = $School_ID";
+                        $LibraryOperator_ID = $operator_data['LibraryOperator_ID'];
+                        $query = "SELECT * FROM LibraryOperator WHERE LibraryOperator_ID = $LibraryOperator_ID";
                         $result = mysqli_query($conn, $query);
                         
                         if(mysqli_num_rows($result) == 0){
-                            echo '<h1 style="margin-top: 5rem;">No Users found!</h1>';
+                            echo '<h1 style="margin-top: 5rem;">No Operator found!</h1>';
                         }
                         else{
 
@@ -66,7 +66,6 @@
                                             echo '<th>First Name</th>';
                                             echo '<th>Last Name</th>';
                                             echo '<th>Username</th>';
-                                            echo '<th>Age</th>';
                                             echo '<th>Role</th>';
                                             echo '<th></th>';
                                         echo '</tr>';
@@ -77,10 +76,9 @@
                                             echo '<td>' . $row['First_Name'] . '</td>';
                                             echo '<td>' . $row['Last_Name'] . '</td>';
                                             echo '<td>' . $row['Username'] . '</td>';
-                                            echo '<td>' . $row['Age'] . '</td>';
-                                            echo '<td>' . $row['Role'] . '</td>';
+                                            echo '<td>Operator</td>';
                                             echo '<td>';
-                                                echo '<a href="./updateoperatorusers.php?id=' . $row['User_ID']. '">';
+                                                echo '<a href="./updateoperatorinfo.php?id=' . $row['LibraryOperator_ID']. '">';
                                                     echo '<i class="fa fa-edit"></i>';
                                                 echo '</a>';
                                             echo '</td>';

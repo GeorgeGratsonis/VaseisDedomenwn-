@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Library Users</title>
-    <link rel = "stylesheet" href = "css/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="admin.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="bootstrap.css">
@@ -20,7 +20,7 @@
 <body>
     <nav class="navbar navbar-light navbar-expand-md" id="nav-bar">
         <div id="navbar-div" class="container-fluid">
-            <a class="navbar-brand" id="nav-bar-text">Library Users - Admin Page</a>
+            <a class="navbar-brand" id="nav-bar-text">School Library - Operator Page</a>
             <a id="navbar-items" href="logout.php">
                 <i class="fa fa-home" href="logout.php"></i> Log out
             </a>
@@ -62,7 +62,9 @@
                         }
 
                         if ($delayDays) {
-                            $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > $delayDays ";
+                            $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > $delayDays AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) IS NOT NULL";
+                        } else {
+                            $query .= "AND DATEDIFF(CURRENT_DATE, Borrowing.Return_Date) > 0";
                         }
 
                         $result = mysqli_query($conn, $query);
