@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Εξυπηρετητής: 127.0.0.1
--- Χρόνος δημιουργίας: 04 Ιουν 2023 στις 22:12:40
+-- Χρόνος δημιουργίας: 04 Ιουν 2023 στις 22:49:52
 -- Έκδοση διακομιστή: 10.4.28-MariaDB
 -- Έκδοση PHP: 8.2.4
 
@@ -668,7 +668,7 @@ DELIMITER $$
 -- Συμβάντα
 --
 DROP EVENT IF EXISTS `Cancel_Expired_Reservations`$$
-CREATE DEFINER=`root`@`localhost` EVENT `Cancel_Expired_Reservations` ON SCHEDULE EVERY 1 DAY STARTS '2023-06-04 23:09:39' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM Reservation
+CREATE DEFINER=`root`@`localhost` EVENT `Cancel_Expired_Reservations` ON SCHEDULE EVERY 1 DAY STARTS '2023-06-04 23:49:03' ON COMPLETION NOT PRESERVE ENABLE DO DELETE FROM Reservation
     WHERE Reservation_Date + INTERVAL 1 WEEK <= CURDATE()
     AND Status = 'Pending'$$
 
