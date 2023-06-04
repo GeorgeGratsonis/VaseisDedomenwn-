@@ -418,6 +418,23 @@ DELIMITER ;
 
 DELIMITER //
 
+CREATE TRIGGER Prevent_Borrowing_If_User_Has_Borrowed_This_Title
+BEFORE INSERT ON Borrowing
+FOR EACH ROW
+BEGIN
+    IF EXISTS (
+        SELECT *
+        FROM Borrowing
+        WHERE User_ID = NEW.User_ID AND Book_ID = NEW.Book_ID AND Returned = FALSE
+    ) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Borrowing not allowed: user has already borrowed the title!';
+    END IF;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
 CREATE TRIGGER Prevent_Reservation_If_User_Has_Borrowed_This_Title
 BEFORE INSERT ON Reservation
 FOR EACH ROW
